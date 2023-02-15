@@ -2,8 +2,13 @@
 
 This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-## Repo Setup
-- `to be continued`
+## Repo Setup 
+##### Please note that the steps below are meant to be run on `MacOS`. If you're using `Windows` refer to [this document](https://tauri.app/v1/guides/getting-started/prerequisites#setting-up-windows)
+- Run `xcode-select --install` to install xcode
+- Install `rust` by running `curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh`
+- Make sure to add `.cargo` to `PATH` variable
+- Validate `rust` by running `rustc --version`
+- Update `rust` by running `rustup update`
 
 ## Recommended IDE Setup
 
