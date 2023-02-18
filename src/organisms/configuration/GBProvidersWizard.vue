@@ -1,38 +1,34 @@
 <script setup lang="ts">
+import { mapState } from 'vuex'
 import GreenButton from '../../atoms/buttons/GreenButton.vue'
 </script>
 
 <script lang="ts">
 
-export interface GBProviderConfig {
-  name: string;
-  url: string;
-  displayName: string;
-}
-
 export interface GBProvidersWizardData {
   step: string | null;
-  providers: GBProviderConfig[]
+  providers: GBProviderConfig[] | null
 }
 
 export default {
-  data() {
+  components: {
+    GreenButton
+  }
+  , data() {
     return {
       step: null
       /** We need to move this to some central store**/
-      , providers: [{
-        name: 'Github.com'
-        , displayName: 'Github.com'
-      }, {
-        name: 'Github Enterprise'
-        , displayName: 'Github Enterprise'
-      }]
     } as GBProvidersWizardData
   }
 
   , computed: {
-    loginButtonText() {
-      return this.step ? 'Login with ' + this.step : 'Login'
+    ...mapState({
+      providers: (state) => {
+        return state.providers.providers
+      }
+    })
+    , loginButtonText() {
+      return this.step ? 'Login using ' + this.providers.get(this.step).displayName : 'Login'
     }
   }
   , methods: {
@@ -44,6 +40,7 @@ export default {
     }
     , proceedWithProvider() {
       console.log(this.step)
+      this.$emit('tokenReceivedFromProvider', { token: true, name: this.step})
     }
   }
 }
@@ -60,15 +57,15 @@ export default {
             "hover:border-gray-200": step !== provider.name, 
             "border-white": step !== provider.name 
           }'
-          v-for='(provider, index) in providers'
-          :key='index'
+          v-for='( [key, provider], index) of providers'
+          :key='key'
           @click='() => select(provider.name)'
         >
           {{provider.displayName}}
         </div>
       </div>
       <div class='flex justify-between content-center flex-row-reverse'>
-        <GreenButton :button-text='loginButtonText' @click='proceedWithProvider' />
+        <GreenButton :button-text='loginButtonText' :disabled='!step' @click='proceedWithProvider' />
       </div>
     </div>
   </div>
