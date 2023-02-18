@@ -57,7 +57,7 @@ export default {
           class='rounded-lg border-4 w-40 h-40 bg-gray-100 p-2'
           :class='{ 
             "border-teal-400": step == provider.name, 
-            "hover:border-blue-400": step !== provider.name, 
+            "hover:border-gray-200": step !== provider.name, 
             "border-white": step !== provider.name 
           }'
           v-for='(provider, index) in providers'
